@@ -1,0 +1,258 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Georgia;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+#form{
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+    margin-top: 50px;
+    margin-inline: 300px;
+    padding: 20px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: rgba(0, 0, 0, 0.322);
+}
+
+#form h1{
+    color: #CB0519;
+    font-size: 29px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#form div{
+    display: flex;
+    flex-direction: column;
+    gap:12px;
+}
+#container1 {
+    background-color: #CB0519;
+    padding-inline: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#container2 {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    margin-block: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-inline: 450px;
+    margin-block: 50px;
+
+    border-style: solid;
+
+    border-color: #CB0519;
+    border-width: 4px;
+    border-radius: 15px;
+    box-shadow: 5px 5px gray;
+}
+
+#container3 {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.btn3 {
+    border: none;
+    background: none;
+    padding: 10px;
+    font-weight: 800;
+    color: white;
+    text-transform: capitalize;
+    border-radius: 7px;
+
+}
+
+.btn3:hover{
+    background-color: #7c030fa1;
+}
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 12px;
+    padding: 10px;
+    align-items: center;
+}
+
+.box img {
+    width: 220px;
+    border-radius: 15px;
+}
+
+.etiq {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.input {
+    line-height: 28px;
+    border: 2px solid transparent;
+    border-bottom-color: #CB0519;
+    padding: .2rem 0;
+    outline: none;
+    background-color: transparent;
+    color: #0d0c22;
+    font-size: 18px;
+    font-weight: 500;
+
+    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.input:focus,
+input:hover {
+    outline: none;
+    padding: .2rem 1rem;
+    border-radius: 1rem;
+    border-color: #CB0519;
+}
+
+.input::placeholder {
+    color: #777;
+}
+
+.input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.btn {
+    --color: #CB0519;
+    --color2: rgb(255, 255, 255);
+    padding: 0.8em 1.75em;
+    background-color: transparent;
+    border-radius: 6px;
+    border: 3px solid var(--color);
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: var(--color);
+}
+
+.btn::after,
+.btn::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: skew(90deg) translate(-50%, -50%);
+    position: absolute;
+    inset: 50%;
+    left: 25%;
+    z-index: -1;
+    transition: .5s ease-out;
+    background-color: var(--color);
+}
+
+.btn::before {
+    top: -50%;
+    left: -25%;
+    transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::before {
+    transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::after {
+    transform: skew(45deg) translate(-50%, -50%);
+}
+
+.btn:hover {
+    color: var(--color2);
+
+}
+
+.btn:active {
+    filter: brightness(.7);
+    transform: scale(.98);
+}
+
+
+.btn2 {
+    --color: #CB0519;
+    --color2: rgb(255, 255, 255);
+    padding: 0.8em 1.75em;
+    background-color: var(--color);
+    border-radius: 6px;
+    border: 3px solid var(--color2);
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: var(--color2);
+}
+
+.btn2::after,
+.btn2::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: skew(90deg) translate(-50%, -50%);
+    position: absolute;
+    inset: 50%;
+    left: 25%;
+    z-index: -1;
+    transition: .5s ease-out;
+    background-color: var(--color2);
+}
+
+.btn2::before {
+    top: -50%;
+    left: -25%;
+    transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn2:hover::before {
+    transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn2:hover::after {
+    transform: skew(45deg) translate(-50%, -50%);
+}
+
+.btn2:hover {
+    color: var(--color);
+
+}
+
+.btn2:active {
+    filter: brightness(.7);
+    transform: scale(.98);
+}

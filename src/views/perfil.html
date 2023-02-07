@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votacion - Utm</title>
+    <link href="./styles/perfil.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="container1">
+        <div id="cont-1">
+            <div>
+                <span id="user">Utm</span>
+            </div>
+
+            <div class=" box">
+                <button class="btn" id="btnVotacion">votacion</button>
+                <button class="btn" id="btnPerfil">perfil</button>
+                <button class="btn" style="color: #CB0519;background-color: white;" id="btnCerrar">cerra
+                    seccion</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="container2">
+        <div id="box1">
+            <img src="./imagenes/Avatars.png" width="200" />
+        </div>
+        <div id="box2">
+            <h2>Datos del usurio</h2>
+            <div>
+                <div class="rows" style="display:flex; flex-direction:row;">
+                    <span style="font-weight: bold;"> Id: </span>
+                    <span id="labelId">Id:</span>
+                </div>
+                <div class="rows" style="display:flex; flex-direction:row;">
+                    <span style="font-weight: bold;"> Nombres y apellidos </span>
+                    <span id="labelNombre"> Id: </span>
+                </div>
+                <div class="rows" class="rows" style="display:flex; flex-direction:row;">
+                    <span style="font-weight: bold;"> Correo</span>
+                    <span id="labelCorreo"> Id:</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./cookies.js"></script>
+
+    <script>
+        const socket = io();
+        window.addEventListener('load', () => {
+            let usuario = getCookie()
+
+            document.getElementById('user').textContent = usuario
+
+
+            document.getElementById('btnCerrar').addEventListener('click', e => {
+
+                socket.emit('desconect', {
+                    usuario
+                })
+
+                window.location.href = "/"
+            })
+
+            document.getElementById('btnVotacion').addEventListener('click', e => {
+                window.location.href = "/indexU"
+            })
+
+            document.getElementById('btnPerfil').addEventListener('click', e => {
+                window.location.href = "/perfil"
+            })
+
+            socket.emit('getUser', getCookie())
+
+            socket.on('getUser2', value => {
+                const { _id, usuario, correo } = value.results
+
+                document.getElementById('labelId').textContent = _id
+                document.getElementById('labelNombre').textContent = usuario
+                document.getElementById('labelCorreo').textContent = correo
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>

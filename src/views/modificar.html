@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel</title>
+    <link href="./styles/modificar.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="container1">
+        <button class="btn3" id="btnVotacion">panel de votacion</button>
+        <button class="btn3" id="btnUsuario">usuarios</button>
+        <button class="btn3" id="btnModificar">modificar</button>
+    </div>
+
+    <div id="form">
+        <h1>Modificar</h1>
+        <div>
+            <div style="margin-bottom: 15px;">
+                <input placeholder="Nombre completo" id="nombre" type="text" class="input" required="">
+                <span style="font-size: 15px; color: #00000093;">Tienes que colocar el nombre completo del
+                    usuairo</span>
+            </div>
+            <input placeholder="Correo" id="correo" type="text" class="input" style="margin-top: 7px;">
+            <input placeholder="Contraseña" id="password" type="text" class="input">
+        </div>
+        <div style="display: flex; gap:12px;flex-direction: row;">
+            <button type="submit" id="boton1" class="btn2" style="flex: 2;"> Eliminar </button>
+            <button type="submit" id="boton2" class="btn" style="flex: 2;"> Modificar </button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+        const socket = io();
+
+
+        window.addEventListener('load', () => {
+
+            document.getElementById('btnVotacion').addEventListener('click', e => {
+                window.location.href = "/admin"
+            })
+
+
+            document.getElementById('btnUsuario').addEventListener('click', e => {
+                window.location.href = "/adminUser"
+            })
+
+            document.getElementById('btnModificar').addEventListener('click', e => {
+                window.location.href = "/modificar"
+            })
+
+
+            document.getElementById('boton1').addEventListener('click', () => {
+                const usuario = document.getElementById('nombre').value.toLowerCase()
+
+                socket.emit('deletes', usuario)
+            })
+
+            document.getElementById('boton2').addEventListener('click', () => {
+                const usuario = document.getElementById('nombre').value.toLowerCase()
+                const correo = document.getElementById('correo').value.toLowerCase()
+                const password = document.getElementById('password').value.toLowerCase()
+
+                socket.emit('updates', {usuario,correo,password})
+            })
+        })
+
+
+        socket.on('deletes2',  value => {
+            const { status, msg } = value
+            console.log(status);
+            if (value.status === 200) {
+               window.location.href="/admin"
+            } else {
+                alert(msg)
+            }
+        })
+
+        socket.on('updates2',  value => {
+            const { status, msg } = value
+            console.log(status);
+            if (value.status === 200) {
+               window.location.href="/admin"
+            } else {
+                alert("usaurio no existe")
+            }
+        })
+    </script>
+</body>
+
+</html>

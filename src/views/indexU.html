@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votacion - Utm</title>
+    <link href="./styles/indexU.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="container1">
+        <div id="cont-1">
+            <div>
+                <span id="user">utm</span>
+            </div>
+
+            <div class=" box">
+                <button class="btn" id="btnVotacion">votacion</button>
+                <button class="btn" id="btnPerfil">perfil</button>
+                <button class="btn" style="color: #CB0519;background-color: white;" id="btnCerrar">cerra
+                    seccion</button>
+            </div>
+        </div>
+        <div id="cont-2">
+            <div style="width: 435px; ">
+                <span style="font-weight: bold; color: white; font-size: 35px;">Grandes empresario de la
+                    tecnologia</span>
+            </div>
+            <div>
+                <img src="./imagenes/CoolKids - Study.png" width="355px" style="transform:translateY(55px);" />
+            </div>
+        </div>
+    </div>
+
+    <div id="container2">
+
+        <div id="box2">
+            <div class="card" id="card1">
+                <div class="card-image"><img src="./imagenes/jeff.jpg" width="254px" height="290px" /></div>
+                <div class="card-description">
+                    <p class="text-title"> Jeff Bezos</p>
+                    <p class="text-body"> Presidente ejecutivo de Amazon
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="card2">
+                <div class="card-image"><img src="./imagenes/mark.jpeg" width="254px" height="290px" /></div>
+                <div class="card-description">
+                    <p class="text-title"> Mark Zuckerberg</p>
+                    <p class="text-body"> Creador y fundador de Facebook
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="card3">
+                <div class="card-image"><img src="./imagenes/elonk.jpeg" width="254px" height="290px" /></div>
+                <div class="card-description">
+                    <p class="text-title"> Elon Musk
+                    </p>
+                    <p class="text-body"> Empresario, inversor y magnate
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button class='btn2'>Confirmar</button>
+        <div id="times">
+            <span id="etiTimes"> 120</span> <span>segundos</span>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./cookies.js"></script>
+
+    <script>
+        const socket = io();
+
+
+        window.addEventListener('load', () => {
+            let usuario = getCookie()
+            var candidato = ""
+
+            socket.emit('loadAdmins', '')
+
+            socket.emit('conectado', getCookie())
+
+            setInterval(() => {
+
+                const context = document.getElementById('etiTimes')
+                let numero = parseInt(context.textContent) - 1
+                context.textContent = numero
+                if (numero == 0) {
+                    candidato = ""
+                    socket.emit('setVoto', {
+                        usuario, candidato
+                    })
+                    return window.location.href = "/indexU"
+                }
+            }, 1000)
+
+            document.getElementById('user').textContent = usuario
+
+
+
+
+            document.querySelector('.btn2').addEventListener('click', (e) => {
+                if (candidato == "") return window.alert("Escoje una opcion")
+
+                socket.emit('setVoto', {
+                    usuario, candidato
+                })
+
+
+            })
+
+            document.getElementById('btnCerrar').addEventListener('click', e => {
+                socket.emit('desconect', {
+                    usuario
+                })
+                window.location.href = "/"
+
+            })
+
+            document.getElementById('btnVotacion').addEventListener('click', e => {
+                window.location.href = "/indexU"
+            })
+
+            document.getElementById('btnPerfil').addEventListener('click', e => {
+                window.location.href = "/perfil"
+            })
+
+            document.querySelectorAll('.card').forEach(e => {
+                const id = e.id
+                document.getElementById(id).addEventListener('click', e => {
+                    if (id == "card1") {
+                        document.getElementById("card1").classList.add('select');
+                        document.getElementById("card2").classList.remove('select');
+                        document.getElementById("card3").classList.remove('select');
+                        candidato = "Jeff Bezos".toLocaleLowerCase()
+
+                    }
+                    if (id == "card2") {
+                        document.getElementById("card1").classList.remove('select');
+                        document.getElementById("card2").classList.add('select');
+                        document.getElementById("card3").classList.remove('select');
+                        candidato = "Mark Zuckerberg".toLocaleLowerCase()
+
+                    }
+                    if (id == "card3") {
+                        document.getElementById("card1").classList.remove('select');
+                        document.getElementById("card2").classList.remove('select');
+                        document.getElementById("card3").classList.add('select');
+                        candidato = "Elon Musk".toLocaleLowerCase()
+
+                    }
+                })
+            })
+
+            socket.emit('getVotoOk', getCookie())  //Verificar si el usuario votado
+
+            socket.emit('conectar', getCookie())
+
+        })
+
+
+
+        socket.on('votoOk', value => {
+            window.location.href = "/indexU"
+        })
+
+        socket.on('getVotoOk2', value => {
+            if (value) document.getElementById('container2').innerHTML = "<h2>Usted ya a votado <br> !Gracias por su opinion!</h2>"
+
+        })
+
+        socket.on('conectar2', values => {
+            console.log(values)
+        })
+
+
+    </script>
+</body>
+
+</html>

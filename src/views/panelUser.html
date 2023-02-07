@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Usuario</title>
+    <link href="./styles/panelUser.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="container1">
+        <button class="btn" id="btnVotacion">panel de votacion</button>
+        <button class="btn" id="btnUsuario">usuarios</button>
+        <button class="btn" id="btnModificar">modificar</button>
+    </div>
+
+    <div id="container2">
+        <span style="font-weight: bold; font-size: 35px; color: #CB0519; text-transform: capitalize;">Usuarios</span>
+        <div>
+            <span id="cant" style="font-size: 30px; font-weight: 600; color: rgba(0, 0, 0, 0.534);">Conectados
+            </span>
+            <span id="conect">0</span>
+        </div>
+    </div>
+
+    <div id="container3">
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const sockets = io();
+
+        window.addEventListener('load', () => {
+
+            document.getElementById('btnVotacion').addEventListener('click', e => {
+                window.location.href = "/admin"
+            })
+
+
+            document.getElementById('btnUsuario').addEventListener('click', e => {
+                window.location.href = "/adminUser"
+            })
+
+            document.getElementById('btnModificar').addEventListener('click', e =>{
+                window.location.href = "/modificar"
+            })
+
+        })
+
+        sockets.on('getAllUsers', values => {
+
+            const contenedor = document.getElementById('container3')
+
+            const { results } = values
+
+            results.forEach(element => {
+                const { usuario, estado } = element
+                if (element.estado === true) {
+                    contenedor.innerHTML += `<div class ='rows'><span>${usuario}</span><span>voto</span></div>`
+                } else {
+                    contenedor.innerHTML += `<div class ='rows'><span>${usuario}</span><span></span></div>`
+                }
+            });
+
+        })
+
+        sockets.on('brConectado', values => {
+
+            const { user, results } = values
+
+            const contenedor = document.getElementById('container3')
+
+            contenedor.innerHTML = null
+
+            let element = document.getElementById('conect')
+            element.textContent = user.length
+
+            results.forEach(e => {
+                const { usuario, estado } = e
+
+                if (user.includes(usuario)) {
+                    if (estado === true) {
+                        contenedor.innerHTML += `<div class ='rows color'><span>${usuario}</span><span>voto</span></div>`
+                    } else {
+                        contenedor.innerHTML += `<div class ='rows color'><span>${usuario}</span><span></span></div>`
+                    }
+                } else {
+                    if (estado === true) {
+                        contenedor.innerHTML += `<div class ='rows'><span>${usuario}</span><span>voto</span></div>`
+                    } else {
+                        contenedor.innerHTML += `<div class ='rows'><span>${usuario}</span><span></span></div>`
+                    }
+                }
+            })
+        })
+
+        sockets.emit('allUsers', '')
+    </script>
+</body>
+
+</html>

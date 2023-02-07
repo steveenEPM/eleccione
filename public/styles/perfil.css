@@ -1,0 +1,121 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Georgia;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#container1 {
+    background-color: #CB0519;
+    padding-inline: 30px;
+    padding-block: 8px;
+}
+
+#cont-1,
+#cont-2 {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+
+}
+
+
+#cont-1 div span {
+    color: white;
+    text-transform: capitalize;
+    font-weight: 800;
+}
+
+#cont-2 {
+    margin-top: 45px;
+    height: 200px;
+}
+
+
+
+#box2 {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+
+
+#times {
+    position: fixed;
+    left: 12px;
+    top: 600px;
+    color: #037712;
+}
+
+#times span {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+
+button {
+    cursor: pointer;
+}
+
+.btn {
+    border: none;
+    background: none;
+    padding: 10px;
+    font-weight: 800;
+    color: white;
+    text-transform: capitalize;
+    border-radius: 7px;
+
+}
+
+#container2 {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 20px 25px;
+    border-width: 2px;
+    border-color: #CB0519;
+    border-radius: 12px;
+    border-style: solid;
+    align-self: center;
+
+}
+
+#box2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#box2 h2 {
+    font-weight: bold;
+    color: #CB0519;
+    text-align: center;
+}
+
+#box2 div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.rows {
+    gap: 12px;
+}

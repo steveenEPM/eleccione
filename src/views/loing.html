@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votacion - Utm</title>
+    <link href="./styles/loing.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="contenedor1">
+        <img src="./imagenes/socket.png" width="550px" />
+    </div>
+    <div id="contenedor2">
+        <form>
+            <h1>Iniciar Seccion</h1>
+            <div style="display: flex; flex-direction: column;">
+                <input placeholder="Correo" id="correo" type="text" class="input" required=""
+                    style="margin-bottom: 4%;">
+                <input placeholder="Contraseña" id="password" type="password" class="input" required="">
+            </div>
+            <button type="submit" class="btn"> Iniciar
+            </button>
+            <div style="align-items: center; align-self: center; cursor: pointer;">
+                <a style="color: #CB0519;" href="/register">¿No tienes una cuenta ?. ¡Registrate! </a>
+            </div>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./cookies.js"></script>
+    <script>
+        const socket = io();
+
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            const correo = document.getElementById('correo').value
+            const password = document.getElementById('password').value
+
+            socket.emit('loing', {
+                correo, password
+            })
+
+        })
+
+        socket.on('resLoing', value => {
+
+            if(value.status === 500){
+                return window.alert(`Alerta ${value.msg}`)
+            }
+
+            if (value.status === 200) {
+                window.location.href="/indexU"
+                setCookie('cokies', value.usuario, 30)
+                return 
+            }
+        })
+
+    </script>
+</body>
+
+</html>
